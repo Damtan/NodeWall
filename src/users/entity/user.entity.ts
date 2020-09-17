@@ -26,4 +26,7 @@ export class UserEntity{
 
     @Expose()
     createdAt ?: Date;
+
+    @Expose()
+    role: number;
 }

@@ -1,16 +1,17 @@
-import mongoose, {Document, Schema} from 'mongoose';
+import mongoose, {Document, Schema, Types} from 'mongoose';
 import {PasswordEncoder} from "../../security/password.encoder";
 
 export interface IUser extends Document {
     _id: string;
     email: string;
-    firstName: string;
-    lastName: string;
+    firstName?: string;
+    lastName?: string|null;
     password: string;
-    username: string;
+    username: string|null;
     termsAccepted: Date;
     createdAt: Date;
-    deletedAt ?: Date
+    deletedAt ?: Date,
+    role: number
 }
 
 const UserSchema = new Schema({
@@ -21,7 +22,8 @@ const UserSchema = new Schema({
     username: { type: String, required: true, unique: true },
     termsAccepted: { type: Date, default: Date.now },
     createdAt: { type: Date, default: Date.now },
-    deletedAt: { type: Date, default: null }
+    deletedAt: { type: Date, default: null },
+    role: { type: Number, required: true, default: 1}
 });
 
 UserSchema.pre('save', async function () {
