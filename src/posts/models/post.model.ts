@@ -2,7 +2,7 @@ import {PostDto} from "../form/post.dto";
 import Post, {IPost} from "../schema/post.schema";
 import {PostsQuery} from "../helper/posts.query";
 import {escapeRegExp} from "tslint/lib/utils";
-
+import {Document, DocumentQuery, Query} from "mongoose";
 
 export class PostModel {
     public static async createPost(data: PostDto): Promise<IPost>{
@@ -11,10 +11,15 @@ export class PostModel {
         return post.save();
     }
 
-    public static async getPosts(query: PostsQuery): Promise<IPost[]>{
-        const regexpSearch = escapeRegExp(query.search);
-        const findQuery = {'title' : regexpSearch, 'description': regexpSearch, 'body': regexpSearch}
+    public static getPostsQuery(query: PostsQuery): DocumentQuery<Document[], Document, {}>{
+        let findQuery = {};
 
-        return Post.find({}, findQuery,{skip:query.page, limit: query.limit});
+        if(query.search) {
+            const search = '/'+escapeRegExp(query.search)+'/';
+
+            findQuery = {'title' : search, 'description': search, 'body': search}
+        }
+
+        return Post.find(findQuery).populate('user');
     }
 }

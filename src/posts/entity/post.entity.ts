@@ -1,8 +1,9 @@
 import {Exclude, Expose, Type} from "class-transformer";
 import {IUser} from "../../users/schema/user.schema";
 import {UserEntity} from "../../users/entity/user.entity";
+import {EntityInterface} from "../../shared/interface/entity.interface";
 
-export class PostEntity{
+export class PostEntity implements EntityInterface{
     @Expose()
     @Type(() => String)
     _id: string;

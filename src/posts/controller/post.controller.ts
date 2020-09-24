@@ -9,8 +9,7 @@ import {
     Post,
     QueryParams
 } from "routing-controllers";
-import {TYPES} from "../types/types";
-import {plainToClass} from "class-transformer";
+import {TYPES as PostTypes}  from "../types/types";
 import {IUser} from "../../users/schema/user.schema";
 import {PostDto} from "../form/post.dto";
 import {IPostService} from "../interfaces/post.service.interface";
@@ -18,11 +17,14 @@ import {IPost} from "../schema/post.schema";
 import {PostsQuery} from "../helper/posts.query";
 import {PostModel} from "../models/post.model";
 import {PostEntity} from "../entity/post.entity";
+import {SharedTypes} from "../../shared/types/types";
+import {IPaginatorService} from "../../shared/interface/paginator.interface";
 
 @injectable()
 @JsonController()
 export class PostController {
-    @inject(TYPES.IPostService) private postService: IPostService;
+    @inject(PostTypes.IPostService) private postService: IPostService;
+    @inject(SharedTypes.IPaginatorService) private paginatorService: IPaginatorService;
 
     @Authorized()
     @Post("/post")
@@ -36,13 +38,8 @@ export class PostController {
         });
     }
 
-
     @Get("/post")
     public async getPost(@QueryParams() query: PostsQuery) : Promise<any>{
-        const posts = await PostModel.getPosts(query);
-        const postJson = posts.map(function (post: IPost) {
-            return post.toObject();
-        });
-        return plainToClass(PostEntity, postJson, { strategy: 'excludeAll' });
+        return this.paginatorService.paginate(PostEntity, PostModel.getPostsQuery(query), query.page, query.limit);
     }
 }
