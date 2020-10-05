@@ -5,6 +5,7 @@ import {LoginDto} from "../form/dto/login.dto";
 import {PasswordEncoder} from "../../security/password.encoder";
 import {UserModel} from "../models/user.model";
 import {injectable} from "inversify";
+import {IUser} from "../schema/user.schema";
 
 @injectable()
 export class UserAuthorization implements IUserAuthentication{

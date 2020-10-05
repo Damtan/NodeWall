@@ -25,9 +25,9 @@ export class UserController{
     @inject(TYPES.IUserAuthentication) private userAuthentication: IUserAuthentication;
 
     @Post("/login")
-    public async loginAction(@Body({ validate: true }) userLogin :LoginDto) : Promise<object> {
-        return await this.userAuthentication.login(userLogin).then((result: object) => {
-            return result;
+    public async loginAction(@Body({ validate: true }) userLogin :LoginDto) : Promise<string> {
+        return await this.userAuthentication.login(userLogin).then((result: IUser) => {
+            return '';
         }).catch(function(err) {
             throw new BadRequestError(err);
         });
@@ -35,7 +35,7 @@ export class UserController{
 
     @Authorized()
     @Get("/user/me")
-    public meAction(@CurrentUser() user?: IUser) : object{
+    public meAction(@CurrentUser() user?: IUser) : UserEntity{
         return plainToClass(UserEntity, user.toObject(), { strategy: 'excludeAll' });
     }
 }

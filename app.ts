@@ -5,10 +5,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { RegisterController } from "./src/users/controller/register.controller";
 import {myContainer} from "./inversify.config";
-import {UserAuthorization} from "./src/users/security/user.authorization";
 import {UserController} from "./src/users/controller/user.controller";
 import {JwtManager} from "./src/security/jwt.manager";
-import {UserModel} from "./src/users/models/user.model";
+import {PostController} from "./src/posts/controller/post.controller";
+import {connect} from "./src/db/db.connection";
+import {ErrorMiddleware} from "./src/middleware/error/error.middleware";
 
 // its important to set container before any operation you do with routing-controllers,
 // including importing controllers
@@ -20,30 +21,29 @@ dotenv.config();
 // port is now available to the Node.js runtime
 // as if it were an environment variable
 const port = process.env.SERVER_PORT;
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
+
 
 useExpressServer( app,{
-    controllers: [RegisterController, UserController], // we specify controllers we want to use
+    controllers: [RegisterController, UserController, PostController], // we specify controllers we want to
+    middlewares: [ErrorMiddleware],
     classTransformer: true,
     authorizationChecker: async (action: Action, roles: string[]) => {
-        const decodedToken = await JwtManager.verifyToken(action.request.headers["authorization"].split(' ')[1]);
-        const user = UserModel.findByUsername(decodedToken.username);
+        if (!action.request.headers["authorization"])
+            return false;
 
-        if(user)
-            return true;
-
-        return false;
+        return await !!JwtManager.getUser(action.request.headers["authorization"].split(' ')[1]);
     },
     currentUserChecker: async (action: Action) => {
-        const decodedToken = await JwtManager.verifyToken(action.request.headers["authorization"].split(' ')[1]);
+        if (!action.request.headers["authorization"])
+            return false;
 
-        return UserModel.findByUsername(decodedToken.username);
-    }
+        return await JwtManager.getUser(action.request.headers["authorization"].split(' ')[1]);
+    },
+    defaultErrorHandler: false,
 });
 
 app.use(cors());
-
+connect();
 app.listen( port, () => {
     console.log( `server started at http://localhost:${ port }` );
 } );
