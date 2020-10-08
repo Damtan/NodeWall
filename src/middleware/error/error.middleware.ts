@@ -31,8 +31,10 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
             error = error.errors;
         }
 
-        // if its an array of ValidationError
-        if (Array.isArray(error) && error.every((element) => element instanceof ValidationError)) {
+        if(error.user !== undefined && error.user.kind === 'required') {
+            res.status(403);
+            responseObject.message = "Authorization required";
+        } else if (Array.isArray(error) && error.every((element) => element instanceof ValidationError)) {
             res.status(400);
             responseObject.message = "You have an error in your request's body. Check 'errors' field for more details!";
             responseObject.errors = error;

@@ -10,6 +10,7 @@ import {JwtManager} from "./src/security/jwt.manager";
 import {PostController} from "./src/posts/controller/post.controller";
 import {connect} from "./src/db/db.connection";
 import {ErrorMiddleware} from "./src/middleware/error/error.middleware";
+import {PostCommentController} from "./src/posts/controller/post.comment.controller";
 
 // its important to set container before any operation you do with routing-controllers,
 // including importing controllers
@@ -24,7 +25,7 @@ const port = process.env.SERVER_PORT;
 
 
 useExpressServer( app,{
-    controllers: [RegisterController, UserController, PostController], // we specify controllers we want to
+    controllers: [RegisterController, UserController, PostController, PostCommentController], // we specify controllers we want to
     middlewares: [ErrorMiddleware],
     classTransformer: true,
     authorizationChecker: async (action: Action, roles: string[]) => {
