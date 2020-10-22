@@ -1,5 +1,6 @@
 import {Document, Model} from "mongoose";
 import {injectable} from "inversify";
+import {IComment} from "../../shared/schema/comment.schema";
 
 @injectable()
 export abstract class ModelBaseService {

@@ -1,6 +1,7 @@
 import mongoose, {Document, Schema} from "mongoose";
 import {IUser} from "../../users/schema/user.schema";
 import {IComment} from "../../shared/schema/comment.schema";
+import {IRate} from "../../shared/schema/rate.schema";
 
 export interface IPost extends Document {
     _id: string;
@@ -9,7 +10,9 @@ export interface IPost extends Document {
     body: string;
     createdAt: Date;
     user: IUser,
-    comments: [IComment]
+    comments: IComment[],
+    overallRate: number,
+    rates: IRate[]
 }
 
 const PostSchema = new Schema({
@@ -22,6 +25,13 @@ const PostSchema = new Schema({
         {
             type: mongoose.Types.ObjectId,
             ref: "comment"
+        }
+    ],
+    overallRate: { type: Number, default: 0},
+    rates: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "rates"
         }
     ]
 });

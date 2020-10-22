@@ -3,16 +3,13 @@ import {IUser} from "../../users/schema/user.schema";
 import {UserEntity} from "../../users/entity/user.entity";
 import {EntityInterface} from "../interface/entity.interface";
 import {IComment} from "../schema/comment.schema";
-import {RateEntity} from "./rate.entity";
-import {IRate} from "../schema/rate.schema";
 
-export class CommentEntity implements EntityInterface {
-    @Expose()
+export class RateEntity implements EntityInterface{
     @Type(() => String)
     _id: string;
 
     @Expose()
-    body: string;
+    rate: boolean;
 
     @Expose()
     createdAt: Date;
@@ -20,11 +17,4 @@ export class CommentEntity implements EntityInterface {
     @Expose()
     @Type(() => UserEntity)
     user: IUser;
-
-    @Expose()
-    @Type(() => RateEntity)
-    rates: IRate[];
-
-    @Expose()
-    overallCount: number;
 }

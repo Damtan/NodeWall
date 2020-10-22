@@ -28,5 +28,5 @@ export class PostEntity implements EntityInterface{
 
     @Expose()
     @Type(() => CommentEntity)
-    comments: IComment;
+    comments: IComment[];
 }

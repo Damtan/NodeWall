@@ -21,6 +21,7 @@ import {IPaginatorService} from "../../shared/interface/paginator.interface";
 import {PaginateDto} from "../../shared/dto/paginate.dto";
 import {ValidationIdMiddleware} from "../../middleware/validation/validation.id.middleware";
 import {plainToClass} from "class-transformer";
+import {CommentEntity} from "../../shared/entity/comment.entity";
 
 @injectable()
 @JsonController()
@@ -58,7 +59,7 @@ export class PostController {
     @Get("/posts/:id")
     @UseBefore(ValidationIdMiddleware)
     public async getPost(@Param("id") id: string) : Promise<PostEntity>{
-        const postWithComments = await this.postModel.getPostWithComments(id);
+        const postWithComments = await this.postModel.getPostWithCommentsAndRates(id, 5);
 
         return plainToClass(PostEntity, postWithComments.toObject(), { strategy: 'excludeAll' });
     }
