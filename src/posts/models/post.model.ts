@@ -33,4 +33,36 @@ export class PostModel extends ModelBaseService {
     public async findOneByUserAndIdAndUpdate(data: PostDto, id: string): Promise<IPost>{
         return <Promise<IPost>>this.getModel().findOneAndUpdate({_id: id, user: { _id: data.user} }, data).exec();
     }
+
+    public async getPostWithCommentsAndRates(id: string, commentsLimit: number) : Promise<IPost>{
+        return await <Promise<IPost>>this.getModel().findById(id).populate({
+            path: "comments",
+            populate: [{
+                path: "user",
+            }, {
+                path: "rates",
+                populate: {
+                    path: "user"
+                }
+            }],
+            options: { limit: commentsLimit }
+        }).populate({
+            path: "user"
+        }).exec();
+    }
+
+    public async getPostCommentsAndRates(id: string, commentsLimit: number) : Promise<IPost>{
+        return await <Promise<IPost>>this.getModel().findById(id).select("comments").populate({
+            path: "comments",
+            populate: [{
+                path: "user",
+            }, {
+                path: "rates",
+                populate: {
+                    path: "user"
+                }
+            }],
+            options: { limit: commentsLimit }
+        }).exec();
+    }
 }

@@ -5,7 +5,6 @@ export class UserEntity{
     @Type(() => String)
     _id: string;
 
-    @Expose()
     email: string;
 
     @Expose()

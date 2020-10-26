@@ -1,12 +1,11 @@
 import {inject, injectable} from "inversify";
 import {
     Authorized,
-    BadRequestError,
     Body,
     CurrentUser,
-    Get, HttpCode,
+    Get,
     JsonController, Param, Patch,
-    Post, Put,
+    Post,
     QueryParams, UseBefore
 } from "routing-controllers";
 import {TYPES as PostTypes}  from "../types/types";
@@ -21,6 +20,8 @@ import {SharedTypes} from "../../shared/types/types";
 import {IPaginatorService} from "../../shared/interface/paginator.interface";
 import {PaginateDto} from "../../shared/dto/paginate.dto";
 import {ValidationIdMiddleware} from "../../middleware/validation/validation.id.middleware";
+import {plainToClass} from "class-transformer";
+import {CommentEntity} from "../../shared/entity/comment.entity";
 
 @injectable()
 @JsonController()
@@ -53,5 +54,13 @@ export class PostController {
         return await this.postService.updatePost(postDto, id).then((result: IPost) => {
             return result._id.toString();
         });
+    }
+
+    @Get("/posts/:id")
+    @UseBefore(ValidationIdMiddleware)
+    public async getPost(@Param("id") id: string) : Promise<PostEntity>{
+        const postWithComments = await this.postModel.getPostWithCommentsAndRates(id, 5);
+
+        return plainToClass(PostEntity, postWithComments.toObject(), { strategy: 'excludeAll' });
     }
 }

@@ -9,7 +9,7 @@ import {EntityInterface} from "../interface/entity.interface";
 @injectable()
 export class PaginatorService implements IPaginatorService {
     public async paginate(entityClass:ClassType<EntityInterface>, query: DocumentQuery<Document[], Document, {}>, page: number, limit: number): Promise<PaginateDto>{
-        const posts = await query.skip((page - 1) * limit).limit(limit).exec();
+        const items = await query.skip((page - 1) * limit).limit(limit).exec();
 
         const paginateDto = new PaginateDto();
         paginateDto.limit = limit;
@@ -18,8 +18,8 @@ export class PaginatorService implements IPaginatorService {
         paginateDto.items = [];
         paginateDto.pages = (Math.ceil(paginateDto.count / limit) || 1);
 
-        if (posts.length) {
-            posts.map(function (post: any) {
+        if (items.length) {
+            items.map(function (post: any) {
                 return post.toObject();
             }).forEach(function (item: string) {
                 paginateDto.items.push(plainToClass(entityClass, item, { strategy: 'excludeAll' }))

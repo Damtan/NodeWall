@@ -4,11 +4,19 @@ import {IPostService} from "../interfaces/post.service.interface";
 import {PostService} from "../services/post.service";
 import {PostController} from "../controller/post.controller";
 import {PostModel} from "../models/post.model";
+import {PostCommentService} from "../services/post.comment.service";
+import {PostCommentController} from "../controller/post.comment.controller";
+import {PostCommentRateController} from "../controller/post.comment.rate.controller";
+import {PostCommentRateService} from "../services/post.comment.rate.service";
 
 const postContainer = new Container();
 
 postContainer.bind<IPostService>(TYPES.IPostService).to(PostService);
 postContainer.bind(PostController).toSelf();
 postContainer.bind<PostModel>(PostModel).to(PostModel);
+postContainer.bind<PostCommentService>(PostCommentService).to(PostCommentService);
+postContainer.bind(PostCommentController).toSelf();
+postContainer.bind(PostCommentRateController).toSelf();
+postContainer.bind<PostCommentRateService>(PostCommentRateService).toSelf();
 
 export { postContainer };
