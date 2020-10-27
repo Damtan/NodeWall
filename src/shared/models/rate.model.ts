@@ -2,8 +2,6 @@ import { Document, Model } from "mongoose";
 import { injectable } from "inversify";
 import { ModelBaseService } from "../../db/service/model.base.service";
 import Rate, { IRate } from "../schema/rate.schema";
-import { CommentDto } from "../form/comment.dto";
-
 @injectable()
 export class RateModel extends ModelBaseService {
   protected getModel(): Model<Document, {}> {

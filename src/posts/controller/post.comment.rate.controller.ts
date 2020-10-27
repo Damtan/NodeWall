@@ -1,7 +1,6 @@
 import { inject, injectable } from "inversify";
 import {
   Authorized,
-  Body,
   CurrentUser,
   JsonController,
   Param,

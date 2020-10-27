@@ -1,6 +1,5 @@
 import { inject, injectable } from "inversify";
 import { PostModel } from "../models/post.model";
-import { IUser } from "../../users/schema/user.schema";
 import { IPost } from "../schema/post.schema";
 import { CommentModel } from "../../shared/models/comment.model";
 import { CommentDto } from "../../shared/form/comment.dto";
