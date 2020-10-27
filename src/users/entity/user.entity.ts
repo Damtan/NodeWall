@@ -1,31 +1,31 @@
-import {Exclude, Expose, Type} from "class-transformer";
+import { Exclude, Expose, Type } from "class-transformer";
 
-export class UserEntity{
-    @Expose()
-    @Type(() => String)
-    _id: string;
+export class UserEntity {
+  @Expose()
+  @Type(() => String)
+  _id: string;
 
-    email: string;
+  email: string;
 
-    @Expose()
-    firstName ?: string;
+  @Expose()
+  firstName?: string;
 
-    @Expose()
-    lastName ?: string;
+  @Expose()
+  lastName?: string;
 
-    password: string;
+  password: string;
 
-    @Expose()
-    username: string;
+  @Expose()
+  username: string;
 
-    termsAccepted ?: Date;
+  termsAccepted?: Date;
 
-    @Expose()
-    deletedAt ?: Date;
+  @Expose()
+  deletedAt?: Date;
 
-    @Expose()
-    createdAt ?: Date;
+  @Expose()
+  createdAt?: Date;
 
-    @Expose()
-    role: number;
+  @Expose()
+  role: number;
 }

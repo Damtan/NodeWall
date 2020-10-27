@@ -1,5 +1,5 @@
 const TYPES = {
-    IPaginatorService: Symbol.for("IPaginatorService"),
+  IPaginatorService: Symbol.for("IPaginatorService"),
 };
 
-export { TYPES as SharedTypes};
+export { TYPES as SharedTypes };

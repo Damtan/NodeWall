@@ -1,9 +1,9 @@
-import {IsDefined} from "class-validator";
+import { IsDefined } from "class-validator";
 
 export class LoginDto {
-    @IsDefined()
-    username: string;
+  @IsDefined()
+  username: string;
 
-    @IsDefined()
-    password: string;
+  @IsDefined()
+  password: string;
 }

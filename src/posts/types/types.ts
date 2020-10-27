@@ -1,5 +1,5 @@
 const TYPES = {
-    IPostService: Symbol.for("IPostService"),
+  IPostService: Symbol.for("IPostService"),
 };
 
 export { TYPES };

@@ -1,3 +1,1 @@
-export interface EntityInterface {
-    
-}
+export interface EntityInterface {}

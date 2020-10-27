@@ -1,15 +1,15 @@
-import {IsAlphanumeric, IsPositive, IsOptional} from "class-validator";
+import { IsAlphanumeric, IsPositive, IsOptional } from "class-validator";
 
 export class PostsQuery {
-    @IsPositive()
-    @IsOptional()
-    limit: number = 10;
+  @IsPositive()
+  @IsOptional()
+  limit = 10;
 
-    @IsOptional()
-    @IsPositive()
-    page: number = 1;
+  @IsOptional()
+  @IsPositive()
+  page = 1;
 
-    @IsOptional()
-    @IsAlphanumeric()
-    search?: string = null
+  @IsOptional()
+  @IsAlphanumeric()
+  search?: string = null;
 }

@@ -6,7 +6,7 @@ import { IUser } from "../schema/user.schema";
 
 @injectable()
 export class RegisterService implements UserRegisterInterface {
-    public register(registerData: RegisterDto): Promise<IUser> {
-        return UserModel.create(registerData);
-    }
+  public register(registerData: RegisterDto): Promise<IUser> {
+    return UserModel.create(registerData);
+  }
 }
