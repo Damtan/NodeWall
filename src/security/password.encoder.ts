@@ -1,12 +1,12 @@
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from "bcrypt";
 
 export class PasswordEncoder {
-    static async cryptPassword(password): Promise<string> {
-        let salt = await bcrypt.genSalt(10);
-        return  bcrypt.hash(password, salt);
-    };
+  static async cryptPassword(password): Promise<string> {
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(password, salt);
+  }
 
-    static comparePassword(plainPass, hashword): Promise<boolean>{
-        return bcrypt.compare(plainPass, hashword);
-    };
+  static comparePassword(plainPass, hashword): Promise<boolean> {
+    return bcrypt.compare(plainPass, hashword);
+  }
 }

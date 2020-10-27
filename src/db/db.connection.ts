@@ -1,6 +1,5 @@
-const mongoose = require('mongoose');
-const mongodb = require('mongodb');
+import mongoose from "mongoose";
 
-export function connect() {
-    mongoose.connect(process.env.DB_URL, {useNewUrlParser: true});
+export function connect(): void {
+  mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
 }

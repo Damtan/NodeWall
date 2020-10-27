@@ -1,5 +1,5 @@
-import {LoginDto} from "../form/dto/login.dto";
+import { LoginDto } from "../form/dto/login.dto";
 
-export interface IUserAuthentication{
-    login(loginData: LoginDto): Promise<object>
+export interface IUserAuthentication {
+  login(loginData: LoginDto): Promise<object>;
 }

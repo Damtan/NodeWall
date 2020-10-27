@@ -1,39 +1,47 @@
-import {inject, injectable} from "inversify";
+import { inject, injectable } from "inversify";
 import {
-    Authorized,
-    CurrentUser,
-    JsonController, Param,
-    Post, UseBefore
+  Authorized,
+  CurrentUser,
+  JsonController,
+  Param,
+  Post,
+  UseBefore,
 } from "routing-controllers";
 
-import {IUser} from "../../users/schema/user.schema";
-import {ValidationIdMiddleware} from "../../middleware/validation/validation.id.middleware";
-import {PostRateService} from "../services/post.rate.service";
+import { IUser } from "../../users/schema/user.schema";
+import { ValidationIdMiddleware } from "../../middleware/validation/validation.id.middleware";
+import { PostRateService } from "../services/post.rate.service";
 
 @injectable()
 @JsonController()
-export class PostCommentRateController {
-    @inject(PostRateService) private postRateService: PostRateService;
+export class PostRateController {
+  @inject(PostRateService) private postRateService: PostRateService;
 
-    @Authorized()
-    @Post("/posts/:id/rate/up")
-    @UseBefore(ValidationIdMiddleware)
-    public async rateUP(@CurrentUser() user: IUser, @Param("id") id: string): Promise<boolean>{
-        await this.createRate(user, id,  true);
+  @Authorized()
+  @Post("/posts/:id/rate/up")
+  @UseBefore(ValidationIdMiddleware)
+  public async rateUP(
+    @CurrentUser() user: IUser,
+    @Param("id") id: string
+  ): Promise<boolean> {
+    await this.createRate(user, id, true);
 
-        return true;
-    }
+    return true;
+  }
 
-    @Authorized()
-    @Post("/posts/:id/rate/down")
-    @UseBefore(ValidationIdMiddleware)
-    public async rateDown(@CurrentUser() user: IUser, @Param("id") id: string): Promise<boolean>{
-        await this.createRate(user, id,  false);
+  @Authorized()
+  @Post("/posts/:id/rate/down")
+  @UseBefore(ValidationIdMiddleware)
+  public async rateDown(
+    @CurrentUser() user: IUser,
+    @Param("id") id: string
+  ): Promise<boolean> {
+    await this.createRate(user, id, false);
 
-        return true;
-    }
+    return true;
+  }
 
-    private async createRate(user: IUser, id: string, vote: boolean) {
-        await this.postRateService.create(id,  vote, user);
-    }
+  private async createRate(user: IUser, id: string, vote: boolean) {
+    await this.postRateService.create(id, vote, user);
+  }
 }

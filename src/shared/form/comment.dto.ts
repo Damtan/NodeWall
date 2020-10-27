@@ -1,9 +1,9 @@
-import {IsDefined, Length} from "class-validator";
+import { IsDefined, Length } from "class-validator";
 
 export class CommentDto {
-    @IsDefined()
-    @Length(10, 500)
-    body: string;
+  @IsDefined()
+  @Length(10, 500)
+  body: string;
 
-    user: string
+  user: string;
 }
