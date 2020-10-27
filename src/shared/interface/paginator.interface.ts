@@ -1,4 +1,4 @@
-import { Document, DocumentQuery, Query } from "mongoose";
+import { Document, DocumentQuery } from "mongoose";
 import { PaginateDto } from "../dto/paginate.dto";
 import { ClassType } from "class-transformer/ClassTransformer";
 import { EntityInterface } from "./entity.interface";

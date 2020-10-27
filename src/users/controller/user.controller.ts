@@ -1,15 +1,9 @@
 import {
   JsonController,
-  Param,
   Body,
   Get,
   Post,
-  Put,
-  Delete,
-  Req,
-  Res,
   Authorized,
-  NotFoundError,
   BadRequestError,
   CurrentUser,
 } from "routing-controllers";
@@ -31,14 +25,7 @@ export class UserController {
   public async loginAction(
     @Body({ validate: true }) userLogin: LoginDto
   ): Promise<string> {
-    return await this.userAuthentication
-      .login(userLogin)
-      .then((result: IUser) => {
-        return "";
-      })
-      .catch(function (err) {
-        throw new BadRequestError(err);
-      });
+    return await this.userAuthentication.login(userLogin);
   }
 
   @Authorized()
